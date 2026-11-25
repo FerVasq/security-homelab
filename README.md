@@ -40,7 +40,7 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 - `configs/` sanitized configs only
 
 ## Challenges and lessons learned
-[Fill this in as you go: what broke, how you fixed it, what you'd do differently.]
+Ubuntu got no DHCP lease on the Internal segment. Cause: Dnsmasq's interface list excluded INTERNAL. Fix: added it and created a reservation.
 
 ## Safety
 This lab is isolated and only attacks machines I built. No credentials, keys, or real IPs are committed to this repo.
