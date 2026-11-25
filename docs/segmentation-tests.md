@@ -49,16 +49,17 @@ Firewall rules enforce one-way segmentation: the Attacker zone can reach only SS
 
 ### Firewall logs
 
-**Blocked pings (tests 4 and 6), labeled with the custom rule names**
+**Test 4: Kali's ping to the firewall dropped by the custom rule**
 
-![Firewall log showing pings dropped by the block rules](evidence/block-attacker-to-internal.png)
+![Firewall log: Block attacker to internal](evidence/block-attacker-to-internal.png)
 
-![Firewall log showing pings dropped by the block rules](evidence/block-internal-to-attacker.png)
+**Test 5: Nmap scan dropped by the custom rule**
 
-**Blocked Nmap scan (test 5)**
+![Firewall log: Nmap scan dropped by the block rule](evidence/opnsense-live-view-nmap-blocked.png)
 
-![Firewall log showing the Nmap scan dropped by the block rule](evidence/opnsense-live-view-nmap-blocked.png)
+**Test 6: ubuntu-srv's ping to Kali dropped by the custom rule**
 
+![Firewall log: Block internal to attacker](evidence/block-internal-to-attacker.png)
 ### Rule sets
 
 **ATTACKER rules**
