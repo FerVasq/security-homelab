@@ -23,26 +23,26 @@ Tested from Kali (Attacker, 10.10.10.144) after applying firewall rules.
 
 **Test 1: ping to ubuntu-srv succeeds**
 
-![Ping to ubuntu-srv gets replies](kali-ping-allowed.png)
+![Ping to ubuntu-srv gets replies](evidence/kali-ping-allowed.png)
 
 **Test 2: SSH to ubuntu-srv succeeds**
 
-![SSH login to ubuntu-srv from Kali](kali-ssh-allowed.png)
+![SSH login to ubuntu-srv from Kali](evidence/kali-ssh-allowed.png)
 
 **Test 3: Nmap finds only port 22 open**
 
-![Nmap scan of ubuntu-srv shows only 22/tcp open](kali-nmap-allowed-host.png)
+![Nmap scan of ubuntu-srv shows only 22/tcp open](evidence/kali-nmap-allowed-host.png)
 
 ### Blocked traffic
 
 **Test 4: ping to the firewall interface gets no reply**
 
-![Ping to 10.10.20.254 gets no replies](kali-ping-blocked.png)
+![Ping to 10.10.20.254 gets no replies](evidence/kali-ping-blocked.png)
 
 **Test 5: Nmap to the firewall interface times out**
 
-![Nmap scan of 10.10.20.254 times out as filtered](kali-nmap-blocked-host.png)
+![Nmap scan of 10.10.20.254 times out as filtered](evidence/kali-nmap-blocked-host.png)
 
 **Test 6: Internal host cannot reach the Attacker zone**
 
-![ubuntu-srv ping to Kali gets no replies](ubuntu-ping-attacker-blocked.png)
+![ubuntu-srv ping to Kali gets no replies](evidence/ubuntu-ping-attacker-blocked.png)
