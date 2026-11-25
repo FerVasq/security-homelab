@@ -20,12 +20,16 @@ Segmented virtual enterprise lab for practicing attack, detection, and hardening
 | Internal | [subnet] | Ubuntu Server 24.04, Wazuh |
 | DMZ | [subnet] | [web server] |
 
-All networks are VMware host-only and isolated from my home network.
+The three lab zones are isolated VMware networks. Only the OPNsense WAN connects out, through VMware NAT.
 
 ## Tools
 VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydra
 
 ## Results
+
+**Segmentation tests:** firewall rules were tested from Kali and ubuntu-srv, and all six tests passed. See [docs/segmentation-tests.md](docs/segmentation-tests.md).
+
+**Attack and detection results** (in progress):
 
 | Attack | Technique (MITRE ATT&CK) | Detected before hardening? | Detected after? |
 |--------|--------------------------|----------------------------|-----------------|
