@@ -41,4 +41,8 @@ Tested from Kali (Attacker, 10.10.10.144) after applying firewall rules.
 
 **Test 5: Nmap to the firewall interface times out**
 
-![Nmap scan of 10.10.20.254
+![Nmap scan of 10.10.20.254 times out as filtered](kali-nmap-blocked-host.png)
+
+**Test 6: Internal host cannot reach the Attacker zone**
+
+![ubuntu-srv ping to Kali gets no replies](ubuntu-ping-attacker-blocked.png)
