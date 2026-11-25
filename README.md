@@ -12,6 +12,8 @@ Segmented virtual enterprise lab for practicing attack, detection, and hardening
 
 ## Architecture
 
+![Network diagram](docs/network-diagram.svg)
+
 | Zone | Network | Machines |
 |------|---------|----------|
 | Attacker | [subnet] | Kali Linux |
