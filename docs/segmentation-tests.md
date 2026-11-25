@@ -51,18 +51,18 @@ Firewall rules enforce one-way segmentation: the Attacker zone can reach only SS
 
 **Blocked pings (tests 4 and 6), labeled with the custom rule names**
 
-![Firewall log showing pings dropped by the block rules](screenshots/opnsense-live-view-blocks.png)
+![Firewall log showing pings dropped by the block rules](evidence/opnsense-live-view-blocks.png)
 
 **Blocked Nmap scan (test 5)**
 
-![Firewall log showing the Nmap scan dropped by the block rule](screenshots/opnsense-live-view-nmap-blocked.png)
+![Firewall log showing the Nmap scan dropped by the block rule](evidence/opnsense-live-view-nmap-blocked.png)
 
 ### Rule sets
 
 **ATTACKER rules**
 
-![ATTACKER firewall rules in order](screenshots/opnsense-rules-attacker.png)
+![ATTACKER firewall rules in order](evidence/opnsense-rules-attacker.png)
 
 **INTERNAL rules**
 
-![INTERNAL firewall rules with the block rule above the defaults](screenshots/opnsense-rules-internal.png)
+![INTERNAL firewall rules with the block rule above the defaults](evidence/opnsense-rules-internal.png)
