@@ -2,7 +2,7 @@
 
 Segmented virtual enterprise lab for practicing attack, detection, and hardening. Built in VMware Workstation as a self-directed project.
 
-**Status:** In progress (started [date])
+**Status:** In progress (started November 24, 2026)
 
 ## Goals
 - Build a segmented network with a firewall separating attacker, internal, and DMZ zones
