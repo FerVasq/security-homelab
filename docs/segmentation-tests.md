@@ -11,7 +11,7 @@ Tested from Kali (Attacker, 10.10.10.144) after applying firewall rules.
 | 5 | nmap 10.10.20.254 (from Kali) | Filtered/timeout | Pass (scan timed out) | kali-nmap-blocked-host.png |
 | 6 | ping 10.10.10.144 (from ubuntu-srv) | Blocked | Pass (no reply) | ubuntu-ping-attacker-blocked.png |
 
-[paste the summary line here]
+Firewall rules enforce one-way segmentation: the Attacker zone can reach only SSH and ping on ubuntu-srv (simulating a foothold), while all other Internal hosts and the firewall itself are unreachable. Internal hosts cannot initiate connections to the Attacker zone.
 
 ## Rules tested
 - ATTACKER: allow SSH and ping to 10.10.20.10, block the rest of INTERNAL, allow DMZ
@@ -47,16 +47,22 @@ Tested from Kali (Attacker, 10.10.10.144) after applying firewall rules.
 
 ![ubuntu-srv ping to Kali gets no replies](evidence/ubuntu-ping-attacker-blocked.png)
 
-### Firewall logs and rules
+### Firewall logs
 
-**OPNsense Live View showing dropped traffic**
+**Blocked pings (tests 4 and 6), labeled with the custom rule names**
 
-![Firewall log with blocked entries from the Attacker and Internal zones](screenshots/opnsense-live-view-blocks.png)
+![Firewall log showing pings dropped by the block rules](screenshots/opnsense-live-view-blocks.png)
 
-**ATTACKER rule set**
+**Blocked Nmap scan (test 5)**
+
+![Firewall log showing the Nmap scan dropped by the block rule](screenshots/opnsense-live-view-nmap-blocked.png)
+
+### Rule sets
+
+**ATTACKER rules**
 
 ![ATTACKER firewall rules in order](screenshots/opnsense-rules-attacker.png)
 
-**INTERNAL rule set**
+**INTERNAL rules**
 
 ![INTERNAL firewall rules with the block rule above the defaults](screenshots/opnsense-rules-internal.png)
