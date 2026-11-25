@@ -46,3 +46,17 @@ Tested from Kali (Attacker, 10.10.10.144) after applying firewall rules.
 **Test 6: Internal host cannot reach the Attacker zone**
 
 ![ubuntu-srv ping to Kali gets no replies](evidence/ubuntu-ping-attacker-blocked.png)
+
+### Firewall logs and rules
+
+**OPNsense Live View showing dropped traffic**
+
+![Firewall log with blocked entries from the Attacker and Internal zones](screenshots/opnsense-live-view-blocks.png)
+
+**ATTACKER rule set**
+
+![ATTACKER firewall rules in order](screenshots/opnsense-rules-attacker.png)
+
+**INTERNAL rule set**
+
+![INTERNAL firewall rules with the block rule above the defaults](screenshots/opnsense-rules-internal.png)
