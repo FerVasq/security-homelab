@@ -46,7 +46,14 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 - `configs/` sanitized configs only
 
 ## Challenges and lessons learned
-Ubuntu got no DHCP lease on the Internal segment. Cause: Dnsmasq's interface list excluded INTERNAL. Fix: added it and created a reservation.
+
+- **Dnsmasq interface list:** ubuntu-srv got no DHCP lease on the Internal segment. Cause: Dnsmasq's interface list only included ATTACKER and DMZ. Fix: added INTERNAL to the interface list under Services > Dnsmasq DNS & DHCP > General.
+
+- **DHCP reservations need a reboot:** after adding a host reservation in OPNsense (binding a VM's MAC to a fixed address outside the dynamic pool), running `networkctl renew` on the VM did not pick up the new address. A full reboot did. Reservations should be added before building a VM, or expect to reboot after adding one.
+
+- **Ubuntu installer ISO errors look worse than they are:** after the Wazuh VM's install finished and the "Reboot Now" prompt appeared, leaving the installer ISO connected through the reboot printed a wall of `SQUASHFS error: Failed to read block` messages. The install had already completed; the errors were the installer losing access to its own ISO during shutdown, not a failed install. Disconnecting the CD/DVD drive (Connect at power on unticked) before rebooting avoids the scare.
+
+- **Wazuh agent version should match the manager:** Wazuh recommends keeping agents on the same or an older version than the manager, since a newer agent can lose compatibility. After installing the agent on ubuntu-srv, I pinned its version with `apt-mark hold wazuh-agent` so a routine `apt upgrade` can't silently update it out of sync with the server.
 
 ## Safety
 This lab is isolated and only attacks machines I built. No credentials, keys, or real IPs are committed to this repo.
