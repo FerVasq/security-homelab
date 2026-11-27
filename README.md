@@ -43,11 +43,13 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 
 ## Repo layout
 
-- `docs/segmentation-tests.md` — firewall rule tests and results 
+- `docs/segmentation-tests.md` — firewall rule tests and results
 - `docs/attack-detection-tests.md` — attack simulations, Wazuh detections, 
-  and the custom detection rule 
-- `docs/evidence/` — supporting screenshots for both test files
+  and the custom detection rule writeup
+- `docs/evidence/` — supporting screenshots
 - `docs/network-diagram.svg` — current network diagram
+- `configs/` — sanitized, reusable copies of the custom Wazuh decoder/rule 
+  files and agent config additions
 
 ## Challenges and lessons learned
 
