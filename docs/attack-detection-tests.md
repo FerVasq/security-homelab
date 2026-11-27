@@ -60,3 +60,41 @@ needed for this detection.
 ![Wazuh detecting the SSH brute force attempt](evidence/wazuh-ssh-bruteforce-detected.png)
 
 ![MITRE ATT&CK mapping for the brute force alert](evidence/wazuh-ssh-bruteforce-mitre.png)
+
+## Test 3: Web scan against dmz-web (Nikto)
+
+**Command:** `nikto -h http://10.10.30.10`
+
+**Result:** 8,167 requests made in 20 seconds. Findings included the nginx 
+version (1.24.0, outdated vs. current 1.31.3) and 8 missing security headers.
+
+**Wazuh detection:** 8,039 alerts generated, parsed directly from nginx's 
+access log via Wazuh's built-in web-accesslog decoder, no additional 
+configuration needed.
+
+Checking `rule.description` breakdown across the scan window revealed at 
+least 7 distinct rule types firing, each mapped to a different MITRE 
+technique:
+
+| Rule description | MITRE ID(s) | Level |
+|---|---|---|
+| Multiple web server 400 error codes from same source ip | T1595.002 | 10 |
+| Suspicious URL access | T1055 | 6 |
+| Multiple XSS attempts from same source ip | T1059 | 10 |
+| XSS (Cross Site Scripting) attempt | T1059.007 | 6 |
+| Common web attack | T1055, T1083, T1190 | 6 |
+| SQL injection attempt | T1190 | 7 |
+| PHP CGI-bin vulnerability attempt | T1210 | 6 |
+
+**Finding:** Wazuh's default web ruleset is far more granular than expected, 
+it doesn't just flag "a scan happened", it distinguishes reconnaissance 
+(repeated 400 errors → T1595.002 Active Scanning) from actual exploitation 
+attempts (SQLi → T1190, XSS → T1059.007, PHP CGI vulnerabilities → T1210), 
+assigning appropriate severity and MITRE context to each category 
+automatically, no custom rules required.
+
+**Evidence:**
+
+![Wazuh detecting the Nikto web scan via nginx access log](evidence/wazuh-web-scan-detected.png)
+
+![Breakdown of distinct rule descriptions fired during the scan](evidence/wazuh-web-scan-rule-breakdown.png)
