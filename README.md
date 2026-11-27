@@ -42,10 +42,12 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 **Summary:** The three lab zones are isolated VMware networks. Only the OPNsense WAN connects out, through VMware NAT.
 
 ## Repo layout
-- `docs/` build notes, one file per step
-- `detections/` custom Wazuh rules
-- `attacks/` what I ran and what the logs showed
-- `configs/` sanitized configs only
+
+- `docs/segmentation-tests.md` — firewall rule tests and results (Wednesday)
+- `docs/attack-detection-tests.md` — attack simulations, Wazuh detections, 
+  and the custom detection rule (Friday/Saturday)
+- `docs/evidence/` — supporting screenshots for both test files
+- `docs/network-diagram.svg` — current network diagram
 
 ## Challenges and lessons learned
 
