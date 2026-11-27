@@ -163,6 +163,12 @@ scan-like patterns.
      </rule>
    </group>
    ```
+   Reusable copies of these configs:
+   [ufw-localfile.xml](../configs/ufw-localfile.xml), 
+   [ufw-block-decoder.xml](../configs/ufw-block-decoder.xml), 
+   [ufw-portscan-rules.xml](../configs/ufw-portscan-rules.xml)
+
+### Result
 
 ### Result
 
