@@ -1,0 +1,7 @@
+<!-- Added to wazuh manager's /var/ossec/etc/decoders/local_decoder.xml -->
+<decoder name="ufw-block">
+  <parent>kernel</parent>
+  <prematch>UFW BLOCK</prematch>
+  <regex>SRC=(\S+) DST=(\S+)</regex>
+  <order>srcip, dstip</order>
+</decoder>
