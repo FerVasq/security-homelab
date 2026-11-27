@@ -17,7 +17,7 @@ Segmented virtual enterprise lab for practicing attack, detection, and hardening
 | Zone | Network | Machines |
 |------|---------|----------|
 | Attacker | 10.10.10.0/24 | Kali Linux |
-| Internal | 10.10.20.0/24 | Ubuntu Server 24.04 (ubuntu-srv), Wazuh (SIEM) |
+| Internal | 10.10.20.0/24 | Ubuntu Server 24.04 (ubuntu-srv), Wazuh (SIEM, custom detection rules) |
 | DMZ | 10.10.30.0/24 | dmz-web (nginx) |
 
 The three lab zones are isolated VMware networks. Only the OPNsense WAN connects out, through VMware NAT.
@@ -28,6 +28,8 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 ## Results
 
 **Segmentation tests:** firewall rules were tested from Kali and ubuntu-srv, and all six tests passed. See [docs/segmentation-tests.md](docs/segmentation-tests.md).
+
+**Attack and detection tests:** three attacks tested against ubuntu-srv and dmz-web (Nmap scan, SSH brute force, web vulnerability scan). Two were detected entirely by Wazuh's default rules with full MITRE ATT&CK mapping; the third (network scanning) required a custom decoder and correlation rule, also built and documented. See [docs/attack-detection-tests.md](docs/attack-detection-tests.md).
 
 **Attack and detection results** (in progress):
 
@@ -57,5 +59,7 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 
 - **Host-only routing only covers directly-connected segments:** the laptop can reach Internal (VMnet3) directly since it has a host adapter there, but has no route to DMZ (VMnet4) since that adapter is intentionally disconnected for isolation. Pings and SSH to dmz-web from the laptop failed with no firewall log entry at all, confirming the packets never left the laptop. Rather than add a static route (which would undermine the isolation), management of DMZ/Attacker hosts is done from Kali instead, which already has firewall-permitted access.
 
+- **Custom Wazuh decoders need explicit parent relationships:** building a custom decoder for ufw firewall logs initially failed silently, Wazuh kept matching events against its built-in generic `kernel` decoder instead of mine, with no error shown. The fix was declaring my decoder as a child (`<parent>kernel</parent>`) rather than competing with the built-in one on the same `program_name`. A second false alarm came from checking in the wrong place: `wazuh-logtest` confirmed the rule logic worked, but live traffic produced no visible alerts until I enabled `<logall>yes</logall>` on the manager and confirmed via `archives.log` that events were in fact arriving correctly the whole time.
+  
 ## Safety
 This lab is isolated and only attacks machines I built. No credentials, keys, or real IPs are committed to this repo.
