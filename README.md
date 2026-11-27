@@ -16,9 +16,9 @@ Segmented virtual enterprise lab for practicing attack, detection, and hardening
 
 | Zone | Network | Machines |
 |------|---------|----------|
-| Attacker | [subnet] | Kali Linux |
-| Internal | [subnet] | Ubuntu Server 24.04, Wazuh |
-| DMZ | [subnet] | [web server] |
+| Attacker | 10.10.10.0/24 | Kali Linux |
+| Internal | 10.10.20.0/24 | Ubuntu Server 24.04 (ubuntu-srv), Wazuh (SIEM) |
+| DMZ | 10.10.30.0/24 | dmz-web (nginx) |
 
 The three lab zones are isolated VMware networks. Only the OPNsense WAN connects out, through VMware NAT.
 
@@ -37,7 +37,7 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 | SSH brute force | [T1110] | [ ] | [ ] |
 | [add more] | | | |
 
-**Summary:** [One or two sentences with your real numbers once you have them.]
+**Summary:** The three lab zones are isolated VMware networks. Only the OPNsense WAN connects out, through VMware NAT.
 
 ## Repo layout
 - `docs/` build notes, one file per step
@@ -54,6 +54,8 @@ VMware Workstation, OPNsense, Ubuntu Server 24.04, Kali Linux, Wazuh, Nmap, Hydr
 - **Ubuntu installer ISO errors look worse than they are:** after the Wazuh VM's install finished and the "Reboot Now" prompt appeared, leaving the installer ISO connected through the reboot printed a wall of `SQUASHFS error: Failed to read block` messages. The install had already completed; the errors were the installer losing access to its own ISO during shutdown, not a failed install. Disconnecting the CD/DVD drive (Connect at power on unticked) before rebooting avoids the scare.
 
 - **Wazuh agent version should match the manager:** Wazuh recommends keeping agents on the same or an older version than the manager, since a newer agent can lose compatibility. After installing the agent on ubuntu-srv, I pinned its version with `apt-mark hold wazuh-agent` so a routine `apt upgrade` can't silently update it out of sync with the server.
+
+- **Host-only routing only covers directly-connected segments:** the laptop can reach Internal (VMnet3) directly since it has a host adapter there, but has no route to DMZ (VMnet4) since that adapter is intentionally disconnected for isolation. Pings and SSH to dmz-web from the laptop failed with no firewall log entry at all, confirming the packets never left the laptop. Rather than add a static route (which would undermine the isolation), management of DMZ/Attacker hosts is done from Kali instead, which already has firewall-permitted access.
 
 ## Safety
 This lab is isolated and only attacks machines I built. No credentials, keys, or real IPs are committed to this repo.
