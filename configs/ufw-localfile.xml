@@ -1,0 +1,5 @@
+<!-- Added to ubuntu-srv's /var/ossec/etc/ossec.conf, inside <ossec_config> -->
+<localfile>
+  <log_format>syslog</log_format>
+  <location>/var/log/ufw.log</location>
+</localfile>
