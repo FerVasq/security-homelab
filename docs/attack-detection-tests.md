@@ -32,3 +32,31 @@ never produces those logs.
 **Evidence:**
 
 ![OPNsense blocking the Nmap scan port by port](evidence/opnsense-nmap-scan-blocked.png)
+
+## Test 2: SSH brute force against ubuntu-srv (Hydra)
+
+**Command:** `hydra -l internal -P /tmp/passlist.txt ssh://10.10.20.10`
+
+**Result:** 5 login attempts, 0 valid passwords found (custom wordlist used 
+intentionally to avoid risk of an accidental successful login).
+
+**Wazuh detection:** 10 alerts generated (one per failed attempt, plus 
+related events), rule description `sshd: authentication failed`, rule level 5.
+
+**MITRE ATT&CK mapping (automatic, built-in Wazuh rule):**
+- T1110.001 — Password Guessing
+- T1021.004 — Remote Services: SSH
+- Tactics: Credential Access, Lateral Movement
+
+Unlike the Nmap scan, SSH brute force traffic is allowed through the firewall 
+(by design, since ubuntu-srv's only exposed service to the Attacker zone is SSH), 
+so it reaches the host and generates real auth.log entries. Wazuh's default 
+`sshd` decoder and rule set detected every failed attempt in real time and 
+automatically mapped it to the correct MITRE techniques, no custom rule was 
+needed for this detection.
+
+**Evidence:**
+
+![Wazuh detecting the SSH brute force attempt](evidence/wazuh-ssh-bruteforce-detected.png)
+
+![MITRE ATT&CK mapping for the brute force alert](evidence/wazuh-ssh-bruteforce-mitre.png)
